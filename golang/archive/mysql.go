@@ -4,8 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-
-	"golang/config"
+	"os"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -13,26 +12,18 @@ import (
 //
 var db *sql.DB
 
-func SetupDbMysql(config config.Config) error {
+func SetupDB() error {
 	fmt.Println("SetupDB called")
-	// os.Setenv("DBUSER", "root")
-	// os.Setenv("DBPASS", "Pass2020!")
-	// os.Setenv("DBNAME", "golang")
-
-	// cfg := mysql.Config{
-	// 	User:   os.Getenv("DBUSER"),
-	// 	Passwd: os.Getenv("DBPASS"),
-	// 	Net:    "tcp",
-	// 	Addr:   "127.0.0.1:3306",
-	// 	DBName: os.Getenv("DBNAME"),
-	// }
+	os.Setenv("DBUSER", "root")
+	os.Setenv("DBPASS", "Pass2020!")
+	os.Setenv("DBNAME", "golang")
 
 	cfg := mysql.Config{
-		User:   config.DbUser,
-		Passwd: config.DbPasswd,
+		User:   os.Getenv("DBUSER"),
+		Passwd: os.Getenv("DBPASS"),
 		Net:    "tcp",
 		Addr:   "127.0.0.1:3306",
-		DBName: config.DbName,
+		DBName: os.Getenv("DBNAME"),
 	}
 
 	// Open database connection
